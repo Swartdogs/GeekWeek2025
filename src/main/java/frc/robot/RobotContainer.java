@@ -20,16 +20,17 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
+
+    // First, define the subsystem
     private final Arm _arm = new Arm();
 
-    private final SetRollerSpeed _runRollersIn = new SetRollerSpeed(_arm, 1);
-    private final SetRollerSpeed _runRollersOut = new SetRollerSpeed(_arm, -1);
+    // Next, define the commands for running the intake rollers in and out
+    private final SetRollerSpeed _runRollersIn; // Initialize this here!
 
-    private final SetArmMotorSpeed _raiseArm = new SetArmMotorSpeed(_arm, 0.3);
-    private final SetArmMotorSpeed _lowerArm = new SetArmMotorSpeed(_arm, -0.3);
+    // Lastly, define the commands for raising and lowering the arm
 
     // The robot's controllers are defined here...
-    private final CommandXboxController _controller = new CommandXboxController(0);
+    private final CommandXboxController _controller; // Initialize this here!
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -48,11 +49,14 @@ public class RobotContainer
      */
     private void configureBindings()
     {
+        // While the right bumper is held, run the rollers inward
         _controller.rightBumper().whileTrue(_runRollersIn);
-        _controller.leftBumper().whileTrue(_runRollersOut);
 
-        _controller.rightTrigger(0.5).whileTrue(_raiseArm);
-        _controller.leftTrigger(0.5).whileTrue(_lowerArm);
+        // While the left bumper is held, run the rollers outward
+
+        // While the right trigger is at least half pressed, raise the arm
+
+        // While the left trigger is at least half pressed, lower the arm
     }
 
     /**

@@ -11,29 +11,28 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+// This class defines all of the hardware that makes up the Arm
+// subsystem and how to interact with it
 public class Arm extends SubsystemBase
 {
-    private final VictorSP _straightWheelMotor = new VictorSP(0);
-    private final VictorSP _angledWheelMotor = new VictorSP(1);
+    // Motors and other hardware are defined here
+    // private final VictorSP _straightWheelMotor = new VictorSP(0);
 
-    private final TalonFX _armAngleMotor = new TalonFX(1);
-
+    // Initialize motor and sensor settings here
     public Arm()
     {
-        _straightWheelMotor.setInverted(true);
-        _angledWheelMotor.setInverted(true);
 
-        _armAngleMotor.getConfigurator().apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     }
 
+    // This function sets both wheels on the intake to the same speed
     public void setRollerSpeed(double percentOutput)
     {
-        _straightWheelMotor.set(percentOutput);
-        _angledWheelMotor.set(percentOutput);
+
     }
 
-    public void setArmMotorSpeed(double speed)
+    // This function sets the arm angle motor to a given speed
+    public void setArmMotorSpeed(double percentOutput)
     {
-        _armAngleMotor.set(speed);
+
     }
 }
