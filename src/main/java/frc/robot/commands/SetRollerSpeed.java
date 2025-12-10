@@ -10,25 +10,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 /** An example command that uses an example subsystem. */
 public class SetRollerSpeed extends Command
 {
-    // Things we need in order to execute this command
     private final Arm _arm;
+    private final double _speed;
 
     /**
      * Creates a new SetRollerSpeed.
      *
      * @param arm The subsystem used by this command.
-     * @param speed The speed to run the wheels at
      */
-    public SetRollerSpeed(Arm arm, double speed)
-    {
+    public SetRollerSpeed(Arm arm, double speed) {
         _arm = arm;
+        _speed = speed;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
-        // Turn the intake wheels on
+        _arm.setRollerSpeed(_speed);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +41,7 @@ public class SetRollerSpeed extends Command
     @Override
     public void end(boolean interrupted)
     {
-        // Shut the intake wheels off
+        _arm.setRollerSpeed(0);
     }
 
     // Returns true when the command should end.
