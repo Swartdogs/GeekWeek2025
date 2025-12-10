@@ -16,9 +16,10 @@ public class PlaceGamePiece extends SequentialCommandGroup
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new SetArmPosition(arm, Constants.ARM_HIGH_ANGLE),
-            new SetRollerSpeed(arm, Constants.ROLLER_OUT_SPEED),
-            new SetArmPosition(arm, Constants.ARM_REST_ANGLE)
+            // Steps:
+            //  1. Set the arm angle to "high"
+            //  2. Set the roller speed to the "out speed"
+            //  3. Set the arm angle to "rest"
         );
     }
 }

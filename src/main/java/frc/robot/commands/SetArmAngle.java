@@ -8,27 +8,25 @@ import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class SetArmPosition extends Command
+public class SetArmAngle extends Command
 {
     private final Arm _arm;
-    private final double _position;
 
     /**
      * Creates a new SetArmPosition.
      *
      * @param arm The subsystem used by this command.
      */
-    public SetArmPosition(Arm arm, double position)
+    public SetArmAngle(Arm arm, double angle)
     {
         _arm = arm;
-        _position = position;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
-        _arm.setArmAngle(_position);
+        // Set the arm angle to the provided angle
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -47,7 +45,9 @@ public class SetArmPosition extends Command
 
     // Returns true when the command should end.
     @Override
-    public boolean isFinished() {
-        return true;
+    public boolean isFinished()
+    {
+        // When is the command finished? When we reach that point, return
+        // true
     }
 }

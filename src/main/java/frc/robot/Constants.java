@@ -15,15 +15,19 @@ package frc.robot;
  */
 public final class Constants
 {
+    // Constants for the roller speeds
     public static final double ROLLER_IN_SPEED = 1.0;
     public static final double ROLLER_OUT_SPEED = -1.0;
 
+    // Constants for arm positions
     public static final double ARM_HIGH_ANGLE = 25;
     public static final double ARM_LOW_ANGLE = 2;
     public static final double ARM_REST_ANGLE = 0;
 
+    // Constants for general arm properties
     public static final double MAX_ARM_ANGLE_MOTOR_SPEED = 0.3;
 
+    // Constants for arm PID coefficients
     public static final double ARM_ANGLE_KP = 0;
     public static final double ARM_ANGLE_KI = 0;
     public static final double ARM_ANGLE_KD = 0;
