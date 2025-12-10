@@ -7,9 +7,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Arm extends SubsystemBase
 {
@@ -18,12 +21,22 @@ public class Arm extends SubsystemBase
 
     private final TalonFX _armAngleMotor = new TalonFX(1);
 
+    private final PIDController _armAnglePID = new PIDController(Constants.ARM_ANGLE_KP, Constants.ARM_ANGLE_KI, Constants.ARM_ANGLE_KD);
+
     public Arm()
     {
         _straightWheelMotor.setInverted(true);
         _angledWheelMotor.setInverted(true);
 
-        _armAngleMotor.getConfigurator().apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+        TalonFXConfiguration configs = new TalonFXConfiguration();
+
+        configs.MotorOutput.PeakForwardDutyCycle = Constants.MAX_ARM_ANGLE_MOTOR_SPEED;
+        configs.MotorOutput.PeakReverseDutyCycle = -Constants.MAX_ARM_ANGLE_MOTOR_SPEED;
+        configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        configs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+        _armAngleMotor.getConfigurator().apply(configs);
+        _armAngleMotor.setPosition(0);
     }
 
     public void setRollerSpeed(double percentOutput)
@@ -34,6 +47,22 @@ public class Arm extends SubsystemBase
 
     public void setArmMotorSpeed(double speed)
     {
+        // _armAngleMotor.set(speed);
+    }
+
+    public void setArmAngle(double angle)
+    {
+        _armAnglePID.setSetpoint(angle);
+    }
+
+    @Override
+    public void periodic()
+    {
+        double angle = _armAngleMotor.getPosition().getValueAsDouble();
+        double speed = _armAnglePID.calculate(angle);
+
+        System.out.println(String.format("Target: %5.2f, Actual: %5.2f", _armAnglePID.getSetpoint(), angle));
+
         _armAngleMotor.set(speed);
     }
 }

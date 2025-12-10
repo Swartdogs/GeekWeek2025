@@ -4,7 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.commands.SetArmMotorSpeed;
+import frc.robot.commands.IntakeGamePiece;
+import frc.robot.commands.PlaceGamePiece;
+import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.SetRollerSpeed;
 import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,11 +24,17 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
     private final Arm _arm = new Arm();
 
-    private final SetRollerSpeed _runRollersIn = new SetRollerSpeed(_arm, 1);
-    private final SetRollerSpeed _runRollersOut = new SetRollerSpeed(_arm, -1);
+    private final SetRollerSpeed _runRollersIn = new SetRollerSpeed(_arm, Constants.ROLLER_IN_SPEED);
+    private final SetRollerSpeed _runRollersOut = new SetRollerSpeed(_arm, Constants.ROLLER_OUT_SPEED);
 
-    private final SetArmMotorSpeed _raiseArm = new SetArmMotorSpeed(_arm, 0.3);
-    private final SetArmMotorSpeed _lowerArm = new SetArmMotorSpeed(_arm, -0.3);
+    // private final SetArmMotorSpeed _raiseArm = new SetArmMotorSpeed(_arm, 0.3);
+    // private final SetArmMotorSpeed _lowerArm = new SetArmMotorSpeed(_arm, -0.3);
+
+    private final SetArmPosition _setArmHigh = new SetArmPosition(_arm, Constants.ARM_HIGH_ANGLE);
+    private final SetArmPosition _setArmLow = new SetArmPosition(_arm, Constants.ARM_LOW_ANGLE);
+
+    private final IntakeGamePiece _intakeGamePiece = new IntakeGamePiece(_arm);
+    private final PlaceGamePiece  _placeGamePiece = new PlaceGamePiece(_arm);
 
     // The robot's controllers are defined here...
     private final CommandXboxController _controller = new CommandXboxController(0);
@@ -51,8 +59,11 @@ public class RobotContainer
         _controller.rightBumper().whileTrue(_runRollersIn);
         _controller.leftBumper().whileTrue(_runRollersOut);
 
-        _controller.rightTrigger(0.5).whileTrue(_raiseArm);
-        _controller.leftTrigger(0.5).whileTrue(_lowerArm);
+        _controller.rightTrigger(0.5).whileTrue(_setArmHigh);
+        _controller.leftTrigger(0.5).whileTrue(_setArmLow);
+
+        _controller.a().whileTrue(_intakeGamePiece);
+        _controller.b().whileTrue(_placeGamePiece);
     }
 
     /**
